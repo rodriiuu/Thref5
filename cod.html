@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TheRef</title>
+<link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+<h1 class="titulo-principal">TheRef</h1>
+<!-- Pantalla de bienvenida -->
+<div id="bienvenida" class="pantalla-bienvenida">
+<h1>¡Bienvenido usuario!</h1>
+<button onclick="iniciar()">Iniciar</button>
+</div>
+
+<!-- Contenido principal oculto inicialmente -->
+<div id="contenido-principal" style="display: none;">
+<!-- Aquí va todo tu formulario, resultados, etc. -->
+</div>
+
+
+<form autocomplete="off" class="contenedor">
+
+
+<div id="seccion-datos-basicos" class="seccion">
+<h2>Datos Básicos</h2>
+<input type="text" id="nombre" placeholder="¿Cuál es tu nombre?" />
+<input type="number" id="edad" placeholder="¿Cuántos años tienes?" />
+<button type="button" onclick="validarDatosBasicos()">Siguiente</button>
+</div>
+
+<div id="seccion-identificacion" class="seccion oculto">
+<h2>Identificación</h2>
+<input type="text" id="cui" placeholder="¿Cuál es tu CUI?" />
+<input type="text" id="dpi" placeholder="¿Cuál es tu DPI?" />
+<button type="button" onclick="irAGenero()">Siguiente</button>
+
+<button onclick="window.location.href='seccion-datos-basicos.html'">Regresar</button>
+</div>
+
+<div id="seccion-genero" class="seccion oculto">
+<h2>Género</h2>
+<select id="genero" onchange="verificarGenero()" onkeydown="detectarEnterGenero(event)">
+<option value="">Selecciona tu género</option>
+<option value="hombre">Hombre</option>
+<option value="mujer">Mujer</option>
+</select>
+
+<div id="extra-mujer" class="oculto">
+<label>¿Estás en tu periodo en este momento?</label>
+<select id="periodo">
+<option value="">Selecciona</option>
+<option value="sí">Sí</option>
+<option value="no">No</option>
+</select>
+
+<label>¿Estás embarazada?</label>
+<select id="embarazo">
+<option value="">Selecciona</option>
+<option value="sí">Sí</option>
+<option value="no">No</option>
+</select>
+</div>
+<button type="button" onclick="mostrarCronica()">Siguiente</button>
+<button type="button" onclick="validarDatosBasicos()">Regresar</button>
+
+
+</div>
+
+<div id="seccion-cronica" class="seccion oculto">
+<h2>¿Tienes alguna enfermedad crónica?</h2>
+<select id="tiene-enfermedad-cronica" onchange="toggleInput('tiene-enfermedad-cronica', 'cronica')">
+<option value="">Selecciona</option>
+<option value="sí">Sí</option>
+<option value="no">No</option>
+</select>
+<input type="text" id="cronica" placeholder="Especifica la enfermedad" class="oculto" />
+<button type="button" onclick="mostrarAlergias()">Siguiente</button>
+<button type="button" onclick="irAGenero()">Regresar</button>
+
+
+</div>
+
+<div id="seccion-alergias" class="seccion oculto">
+<h2>¿Tienes alguna alergia?</h2>
+<select id="tiene-alergia" onchange="toggleInput('tiene-alergia', 'alergias')">
+<option value="">Selecciona</option>
+<option value="sí">Sí</option>
+<option value="no">No</option>
+</select>
+<input type="text" id="alergias" placeholder="Especifica la alergia" class="oculto" />
+<button type="button" onclick="mostrarOperaciones()">Siguiente</button>
+
+<button type="button" onclick="mostrarCronica()">Regresar</button>
+
+
+</div>
+
+<div id="seccion-operaciones" class="seccion oculto">
+<h2>¿Has sido operado?</h2>
+<select id="fue-operado" onchange="toggleInput('fue-operado', 'operado')">
+<option value="">Selecciona</option>
+<option value="sí">Sí</option>
+<option value="no">No</option>
+</select>
+<input type="text" id="operado" placeholder="Especifica la operación" class="oculto" />
+<button type="button" onclick="mostrarFamilia()">Siguiente</button>
+<button type="button" onclick="mostrarAlergias()">Regresar</button>
+
+</div>
+
+<div id="seccion-familia" class="seccion oculto">
+<h2>¿Tienes antecedentes familiares de enfermedad?</h2>
+<select id="tiene-familia" onchange="toggleInput('tiene-familia', 'caso-familiar')">
+<option value="">Selecciona</option>
+<option value="sí">Sí</option>
+<option value="no">No</option>
+</select>
+<input type="text" id="caso-familiar" placeholder="Especifica el caso" class="oculto" />
+<button type="button" onclick="mostrarSignos()">Siguiente</button>
+<button type="button" onclick="mostrarOperaciones()">Regresar</button>
+</div>
+
+<div id="seccion-signos" class="seccion oculto posicion-relativa">
+<img src="3d7507bb-ae99-49b7-a242-7c309827156d.jpeg" id="imagen-signos" alt="Imagen signos" class="imagen-superpuesta" />
+<h2>Signos Vitales</h2>
+<input type="number" id="oxigenacion" placeholder="Oxigenación (%)" />
+<input type="number" id="pulso" placeholder="Pulso (lpm)" />
+<input type="number" id="presion-sistolica" placeholder="Presión Sistólica" />
+<input type="number" id="presion-diastolica" placeholder="Presión Diastólica" />
+<input type="number" step="0.1" id="temperatura" placeholder="Temperatura (°C)" />
+<button type="button" onclick="evaluarSignos()">Evaluar</button>
+<button type="button" onclick="mostrarFamilia()">Regresar</button>
+</div>
+
+<div id="seccion-zona-dolor" class="seccion oculto">
+<h2>Zona de Dolor</h2>
+<select id="zonaSelect" onchange="toggleInput('zonaSelect', 'zona-especifica', false)">
+<option value="">Selecciona una zona</option>
+<option value="cabeza">Cabeza</option>
+<option value="pecho o cuello frontal">Pecho o cuello frontal</option>
+<option value="espalda o cuello trasero">Espalda o cuello trasero</option>
+<option value="abdomen">Abdomen</option>
+<option value="extremidades">Extremidades</option>
+<option value="genitales">Genitales</option>
+</select>
+<input type="text" id="zona-especifica" placeholder="Especifica la zona" class="oculto" />
+<button type="button" onclick="mostrarSiguiente()">Siguiente</button>
+<button type="button" onclick="mostrarSignos()">Regresar</button>
+</div>
+
+<div id="resultado" class="seccion oculto">
+<h2>Resultado</h2>
+<p id="mensaje-final"></p>
+<h3>Resumen</h3>
+<div id="datos-finales">
+<p>Nombre: <span id="r-nombre"></span></p>
+<p>CUI: <span id="r-cui"></span></p>
+<p>DPI: <span id="r-dpi"></span></p>
+<p>Edad: <span id="r-edad"></span></p>
+<p>Género: <span id="r-genero"></span></p>
+<p>Periodo: <span id="r-periodo"></span></p>
+<p>Embarazo: <span id="r-embarazo"></span></p>
+<p>Enfermedad Crónica: <span id="r-cronica"></span></p>
+<p>Alergias: <span id="r-alergias"></span></p>
+<p>Operaciones: <span id="r-operado"></span></p>
+<p>Familiares: <span id="r-familia"></span></p>
+<p>Oxigenación: <span id="r-oxigenacion"></span></p>
+<p>Pulso: <span id="r-pulso"></span></p>
+<p>Presión: <span id="r-presion"></span></p>
+<p>Temperatura: <span id="r-temperatura"></span></p>
+<p>Zona de Dolor: <span id="r-zona-dolor"></span></p>
+</div>
+<button type="button" onclick="imprimirYReiniciar()">Imprimir Resultado</button>
+</div>
+</form>
+
+<script src="data.js" defer></script>
+</body>
+</html>
