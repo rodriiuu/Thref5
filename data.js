@@ -267,23 +267,36 @@ document.getElementById("r-temperatura").textContent = obtenerValor("temperatura
 document.getElementById("r-zona-dolor").textContent =
 obtenerValor("zonaSelect") !== "" ? obtenerValor("zonaSelect") : obtenerValor("zona-especifica");
 }
-
 function imprimirYReiniciar() {
-window.print();
-location.reload();
+  // Crear texto con los datos del formulario para el ticket
+  const textoTicket = `
+*** Resultado TheRef ***
+
+Nombre: ${obtenerValor("nombre")}
+Edad: ${obtenerValor("edad")}
+CUI: ${parseInt(obtenerValor("edad")) <= 17 ? obtenerValor("cui") : "No aplica"}
+DPI: ${parseInt(obtenerValor("edad")) > 17 ? obtenerValor("dpi") : "No aplica"}
+Género: ${obtenerValor("genero")}
+Periodo: ${obtenerValor("genero") === "mujer" ? obtenerValor("periodo") : "No aplica"}
+Embarazo: ${obtenerValor("genero") === "mujer" ? obtenerValor("embarazo") : "No aplica"}
+Enfermedad Crónica: ${obtenerValor("tiene-enfermedad-cronica") === "sí" ? obtenerValor("cronica") : "No"}
+Alergias: ${obtenerValor("tiene-alergia") === "sí" ? obtenerValor("alergias") : "No"}
+Operaciones: ${obtenerValor("fue-operado") === "sí" ? obtenerValor("operado") : "No"}
+Antecedentes Familiares: ${obtenerValor("tiene-familia") === "sí" ? obtenerValor("caso-familiar") : "No"}
+
+Oxigenación: ${obtenerValor("oxigenacion")}%
+Pulso: ${obtenerValor("pulso")} lpm
+Presión: ${obtenerValor("presion-sistolica")}/${obtenerValor("presion-diastolica")} mmHg
+Temperatura: ${obtenerValor("temperatura")} °C
+
+Zona de Dolor: ${obtenerValor("zonaSelect") || obtenerValor("zona-especifica")}
+`;
+
+  // Enviar a imprimir vía RawBT
+  imprimirRawBT(textoTicket);
+
+  // Espera 2 segundos y recarga la página para reiniciar el formulario
+  setTimeout(() => {
+    location.reload();
+  }, 2000);
 }
-function imprimirResultado() {
-// Oculta el formulario antes de imprimir
-document.getElementById('formulario').style.display = 'none';
-
-// Muestra el resultado
-document.getElementById('resultado').style.display = 'block';
-
-// Ejecuta impresión
-window.print();
-
-// (Opcional) Restaurar vista original después de imprimir
-document.getElementById('formulario').style.display = 'block';
-document.getElementById('resultado').style.display = 'none';
-}
-
